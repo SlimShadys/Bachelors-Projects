@@ -1,20 +1,15 @@
 /*
+	Prova di Laboratorio di PROGETTAZIONE DI BASI DI DATI
+	C.d.S. in Informatica e Tecnologie per la Produzione del Software (3 anni)
+	Docente: dott.ssa Francesca A. Lisi
 
-Prova di Laboratorio di PROGETTAZIONE DI BASI DI DATI
-C.d.S. in Informatica e Tecnologie per la Produzione del Software (3 anni)
-Docente: dott.ssa Francesca A. Lisi
+	22 Febbraio 2013
 
-22 Febbraio 2013
-
--------------------------------------
-Cognome e Nome	:
-Matricola	:
--------------------------------------
-
+	-------------------------------------
+	Cognome e Nome	: Scarano Gianmarco
+	Matricola	: 705627
+	-------------------------------------
  */
-
-
-package application;
 
 import java.sql.*;
 
@@ -62,13 +57,13 @@ public class ProvaDB20130222 {
 
 		// es. 6: creazione stringa contenente comando SQL
 		String stringa6 = "SELECT Titolo_libro, COUNT(Nro_autore) AS NroAutori, Nome_editore, Citta_editore "
-				+ "FROM LibriAutori NATURAL JOIN Libri NATURAL JOIN Editori "
+				+ "FROM LibriAutori NATURAL JOIN Libri NATURAL JOIN Editori NATURAL JOIN Autori "
 				+ "GROUP BY Titolo_libro "
 				+ "ORDER BY Titolo_libro";
 
 		// es. 7: creazione stringa contenente comando SQL
 		String stringa7 = "SELECT Nome_editore, COUNT(Codice_libro) AS NumLibri, AVG(Prezzo_libro) AS PrezzoMedio "
-				+ "FROM Editori NATURAL JOIN Libri "
+				+ "FROM Editori NATURAL JOIN Libri NATURAL JOIN LibriAutori "
 				+ "GROUP BY Codice_editore";
 
 		try {

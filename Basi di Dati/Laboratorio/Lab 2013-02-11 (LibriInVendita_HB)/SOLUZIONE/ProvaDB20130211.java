@@ -1,16 +1,14 @@
 /*
+	Prova di Laboratorio di PROGETTAZIONE DI BASI DI DATI
+	C.d.S. in Informatica e Tecnologie per la Produzione del Software (3 anni)
+	Docente: dott.ssa Francesca A. Lisi
 
-Prova di Laboratorio di PROGETTAZIONE DI BASI DI DATI
-C.d.S. in Informatica e Tecnologie per la Produzione del Software (3 anni)
-Docente: dott.ssa Francesca A. Lisi
+	11 Febbraio 2013
 
-11 Febbraio 2013
-
--------------------------------------
-Cognome e Nome	: Scarano Gianmarco
-Matricola	: 705627
--------------------------------------
-
+	-------------------------------------
+	Cognome e Nome	: Scarano Gianmarco
+	Matricola	: 705627
+	-------------------------------------
  */
 
 import java.sql.*;
