@@ -1,0 +1,40 @@
+ALTER TABLE Scorte
+ADD FOREIGN KEY(Nro_filiale) 
+REFERENCES Filiali(Nro_filiale)
+
+
+UPDATE Libri NATURAL JOIN Scorte
+SET Nro_copie_disponibili = (Nro_copie_disponibili - 1)
+WHERE Codice_libro = '6128'
+AND Nro_filiale = '03';
+
+DROP VIEW IF EXISTS LibriSottoScorta_HB ;
+
+CREATE VIEW LibriSottoScorta_HB(Codice_libro) AS
+SELECT Codice_libro
+FROM Libri NATURAL JOIN Scorte NATURAL JOIN Filiali
+WHERE Nro_copie_disponibili < 3
+AND Nome_Filiale = 'Henrys Brentwood';
+
+
+SELECT *
+FROM LibriSottoScorta_HB
+ORDER BY Codice_libro DESC;
+
+
+SELECT Nome_filiale, Titolo_libro, Nro_copie_disponibili
+FROM Libri NATURAL JOIN Scorte NATURAL JOIN Filiali
+ORDER BY Nome_filiale, Titolo_libro;
+
+
+SELECT Titolo_libro
+FROM Libri NATURAL JOIN scorte natural join LibriSottoScorta_HB
+WHERE Nro_copie_disponibili= (SELECT MIN(Nro_copie_disponibili)
+				FROM Libri NATURAL JOIN LibriSottoScorta_HB);
+
+
+SELECT Titolo_libro, Tipo_libro, Prezzo_libro, Nome_filiale
+FROM Libri NATURAL JOIN Scorte NATURAL JOIN Filiali
+WHERE Codice_libro NOT IN (SELECT Codice_libro
+FROM LibriSottoScorta_HB)
+ORDER BY Titolo_libro;

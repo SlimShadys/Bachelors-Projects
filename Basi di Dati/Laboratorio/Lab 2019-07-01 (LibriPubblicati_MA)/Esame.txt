@@ -1,0 +1,81 @@
+/* Es. 1 */
+ALTER TABLE Libri
+ADD FOREIGN KEY (Codice_editore)
+REFERENCES Editori(Codice_editore);
+
+/* Es. 2 */
+DELETE FROM Editori
+WHERE Nome_editore = 'Arcade Publishing';
+
+/* Es. 3 */
+CREATE VIEW LibriPubblicati_MA(Titolo_libro, Nome_editore) AS 
+	SELECT Titolo_libro, Nome_editore
+	FROM Libri NATURAL JOIN Editori
+	WHERE Stato_editore = 'MA';
+
+/* Es. 4 */
+SELECT * FROM LibriPubblicati_MA
+ORDER BY Titolo_libro;
+
+/* Es. 5 */
+SELECT DISTINCT Cognome_autore, Nome_autore 
+FROM Autori NATURAL JOIN LibriAutori NATURAL JOIN Libri NATURAL JOIN LibriPubblicati_MA
+ORDER BY Cognome_autore, Nome_autore;
+
+
+/* Es. 6 */
+SELECT Titolo_libro, Tipo_libro, Prezzo_libro, Nome_editore
+FROM Libri NATURAL JOIN Editori
+WHERE Titolo_libro NOT IN
+	(SELECT Titolo_libro
+	 FROM LibriPubblicati_MA)
+ORDER BY Titolo_libro;
+
+
+/* Es. 7 */
+SELECT Titolo_libro,SUM(Nro_copie_disponibili) AS Nro_copie_disponibili
+FROM Libri NATURAL JOIN Scorte NATURAL JOIN Filiali NATURAL JOIN LibriPubblicati_MA
+GROUP BY Titolo_libro;
+
+
+/* Es. 8 */
+SELECT DISTINCT Cognome_autore, Nome_autore
+FROM Autori NATURAL JOIN LibriAutori NATURAL JOIN Libri NATURAL JOIN Editori
+WHERE Stato_editore = 'MA'
+ORDER BY Cognome_autore, Nome_autore;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Es. 5 */
+SELECT Nro_autore, Cognome_autore, Nome_autore
+FROM Autori NATURAL JOIN LibriAutori NATURAL JOIN Libri NATURAL JOIN LibriPubblicati_MA
+GROUP BY Nro_autore 
+ORDER BY Cognome_autore, Nome_autore;
+
+/* Es. 7 */
+SELECT Titolo_libro, COUNT(Codice_libro) AS Copie 
+FROM Libri NATURAL JOIN Scorte NATURAL JOIN Filiali 
+WHERE Titolo_libro IN (SELECT Titolo_libro FROM LibriPubblicati_MA) 
+GROUP BY Titolo_libro;
+
+/* Es. 8 */
+SELECT Nro_autore, Cognome_autore, Nome_autore
+FROM Autori NATURAL JOIN LibriAutori NATURAL JOIN Libri NATURAL JOIN Editori
+WHERE Stato_editore = 'MA'
+GROUP BY Nro_autore 
+ORDER BY Cognome_autore, Nome_autore;
